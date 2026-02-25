@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: phone_run_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - phone_run_network
+    depends_on:
+      - db
+      - redis
+
+  webserver:
+    image: nginx:alpine
+    container_name: phone_run_nginx
+    restart: unless-stopped
+    ports:
+      - "6156:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - phone_run_network
+
+  db:
+    image: mysql:8.0
+    container_name: phone_run_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - phone_run_network
+
+  redis:
+    image: redis:alpine
+    container_name: phone_run_redis
+    restart: unless-stopped
+    networks:
+      - phone_run_network
+
+networks:
+  phone_run_network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local

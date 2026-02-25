@@ -1,0 +1,32 @@
+name: phone_run
+description: Territory tracking app - run to claim land
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_maps_flutter: ^2.6.0
+  geolocator: ^11.0.0
+  permission_handler: ^11.3.0
+  http: ^1.2.0
+  shared_preferences: ^2.2.3
+  provider: ^6.1.2
+  flutter_dotenv: ^5.1.0
+  google_sign_in: ^6.2.1
+  flutter_facebook_auth: ^7.0.3
+  jwt_decoder: ^2.0.1
+  fluttertoast: ^8.2.4
+  google_maps_flutter_web: ^0.5.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
