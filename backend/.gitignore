@@ -17,3 +17,7 @@ yarn-error.log
 /.idea
 /.vscode
 docker/data/
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
