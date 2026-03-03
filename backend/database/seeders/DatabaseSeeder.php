@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     {
         // Create admin user
         User::firstOrCreate(
-            ['email' => env('FILAMENT_ADMIN_EMAIL', 'admin@runneroccupy.dev.artslabcreatives.com')],
+            ['email' => env('FILAMENT_ADMIN_EMAIL', 'admin@artslabcreatives.com')],
             [
                 'name' => 'Admin',
                 'password' => Hash::make(env('FILAMENT_ADMIN_PASSWORD', 'changeme')),
