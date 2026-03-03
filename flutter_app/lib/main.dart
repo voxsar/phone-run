@@ -17,7 +17,7 @@ class PhoneRunApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Runner Occupy',
+      title: 'Nestamalt Geovaders',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

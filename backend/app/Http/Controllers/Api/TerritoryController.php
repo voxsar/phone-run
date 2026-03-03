@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Territory;
+use App\Services\FirebaseNotificationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,12 @@ class TerritoryController extends Controller
         // Process territory stealing: deactivate any existing territory
         // that is fully contained within or overlapped by this new territory
         $this->processTerritoryStealing($territory);
+
+        FirebaseNotificationService::notifyAdmin(
+            '🗺️ Territory Occupied',
+            Auth::user()->name . ' claimed a new territory (' . number_format($area, 0) . ' m²) in Nestamalt Geovaders.',
+            ['event' => 'territory_claimed', 'territory_id' => (string) $territory->id, 'user_id' => (string) Auth::id()]
+        );
 
         return response()->json($territory->load('user'), 201);
     }

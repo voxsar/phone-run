@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Pages\UserTerritoryMapPage;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
@@ -41,6 +42,11 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->actions([
+                Tables\Actions\Action::make('viewMap')
+                    ->label('View Map')
+                    ->icon('heroicon-o-map')
+                    ->color('info')
+                    ->url(fn (User $record): string => '/admin/user-territory-map?user_id=' . $record->id),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
