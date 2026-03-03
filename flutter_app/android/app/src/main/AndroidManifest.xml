@@ -7,7 +7,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+<<<<<<< HEAD
         android:label="Runner Occupy"
+=======
+        android:label="Nestamalt Geovaders"
+        android:name="${applicationName}"
+>>>>>>> a2bd71d7bb6542ab574690e0dadbf114d3335523
         android:icon="@mipmap/ic_launcher">
         <meta-data
             android:name="flutterEmbedding"

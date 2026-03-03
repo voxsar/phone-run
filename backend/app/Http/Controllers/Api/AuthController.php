@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\FirebaseNotificationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -33,6 +34,12 @@ class AuthController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
+        FirebaseNotificationService::notifyAdmin(
+            '🆕 New Player Registered',
+            "{$user->name} ({$user->email}) just signed up to Nestamalt Geovaders.",
+            ['event' => 'register', 'user_id' => (string) $user->id]
+        );
+
         return response()->json(array_merge($user->toArray(), ['token' => $token]), 201);
     }
 
@@ -45,6 +52,13 @@ class AuthController extends Controller
         }
 
         $user = JWTAuth::user();
+
+        FirebaseNotificationService::notifyAdmin(
+            '🔑 Player Signed In',
+            "{$user->name} ({$user->email}) signed in to Nestamalt Geovaders.",
+            ['event' => 'login', 'user_id' => (string) $user->id]
+        );
+
         return response()->json(array_merge($user->toArray(), ['token' => $token]));
     }
 
@@ -75,6 +89,13 @@ class AuthController extends Controller
         );
 
         $jwtToken = JWTAuth::fromUser($user);
+
+        FirebaseNotificationService::notifyAdmin(
+            '🔑 Player Signed In (Social)',
+            "{$user->name} signed in via {$request->provider} to Nestamalt Geovaders.",
+            ['event' => 'social_login', 'provider' => $request->provider, 'user_id' => (string) $user->id]
+        );
+
         return response()->json(array_merge($user->toArray(), ['token' => $jwtToken]));
     }
 
